@@ -92,9 +92,12 @@ export default{
         console.log(this.posts)
         this.loading = true
     },
-    async liKeyDown(){
-       
-    }
+    async liKeyDown({ params}){
+        this.loading = false
+        this.posts = await this.$axios.$get(`https://dummy.restapiexample.com/api/v1/employees/${this.myInput}`)
+        console.log(this.posts)
+        this.loading = true
+    },
     }
 }
 </script>
