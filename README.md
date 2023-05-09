@@ -1,5 +1,10 @@
 # emp
 
+#note 
+
+```i used tailwind css with nuxt js 
+while click on check console data fetch done but search not working and time limist finshed for test thank you ```
+
 ## Build Setup
 
 ```bash
