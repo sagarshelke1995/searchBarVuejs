@@ -1,9 +1,27 @@
 # emp
 
-#note 
+# reference link 
 
-```i used tailwind css with nuxt js 
-while click on check console data fetch done but search not working and time limist finshed for test thank you ```
+```
+* https://tailwindcss.com/docs/guides/nuxtjs --- this link for guidline
+I used following steps for this project
+  1. npx create-nuxt-app emp
+  2. cd emp
+  3. npm install -D tailwindcss postcss autoprefixer
+  4. npx tailwindcss init
+  5. npm install @nuxtjs/axios
+ And others setting and Stated programing,
+ due to less time i was unable to finished full task but data fetch is done
+```
+
+#Note 
+
+```
+i used tailwind css with nuxt js 
+while click on check console data fetch done 
+but search not working and time limist finshed for test thank you 
+
+```
 
 ## Build Setup
 
