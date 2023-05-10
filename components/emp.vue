@@ -1,9 +1,9 @@
 <template>
     <div class="py-20">
-        {{ posts.data }}
-        <div class="bg-red-200 px-2 text-white w-max" @click="fetch()"> check console</div>
-        <div class="max-w-xl mx-auto">
-            <input type="text" placeholder="search here" v-model="myInput" @keyup="liKeyDown" class="border-2 border-blue-200 w-full px-2 py-2 outline-none rounded-md">
+         <div class="max-w-xl mx-auto">
+            <div class="py-2 text-gray-500">fetching deatils from "https://dummy.restapiexample.com/api/v1/employees"</div>
+            <div class="py-2 text-gray-500">this api is not working properly"</div>
+            <input type="text" placeholder="search here" v-model="searchText" @input="liKeyDown" class="border-2 border-blue-200 w-full px-2 py-2 outline-none rounded-md">
             <div class="grid grid-cols-4 pt-5">
                 <div class="border-[1px] p-2">First Name</div>
                 <div class="border-[1px] p-2">Last Name</div>
@@ -11,7 +11,7 @@
                 <div class="border-[1px] p-2">Age</div>
             </div>
             <div class="a">
-                <div class="a" v-for="emp in posts.data" :key="emp.id">
+                <div class="a" v-for="emp in searchResults" :key="emp.id">
                     <div class="grid grid-cols-4">
                         <div class="border-[1px] p-2">{{ emp.employee_name.split(" ")[0] }}</div>
                         <div class="border-[1px] p-2">{{ emp.employee_name.split(" ")[1] }}</div>
@@ -39,63 +39,35 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default{
     data(){
         return{
-            posts : [],
-            myInput: "",
             loading: true,
-            data : [
-                {
-                "id": 1,
-                "employee_name": "Tiger Nixon",
-                "employee_salary": 320800,
-                "employee_age": 61,
-                "profile_image": ""
-                },
-                {
-                "id": 2,
-                "employee_name": "Garrett Winters",
-                "employee_salary": 170750,
-                "employee_age": 63,
-                "profile_image": ""
-                },
-                {
-                "id": 3,
-                "employee_name": "Ashton Cox",
-                "employee_salary": 86000,
-                "employee_age": 66,
-                "profile_image": ""
-                },
-                {
-                "id": 4,
-                "employee_name": "Cedric Kelly",
-                "employee_salary": 433060,
-                "employee_age": 22,
-                "profile_image": ""
-                },
-                {
-                "id": 5,
-                "employee_name": "Airi Satou",
-                "employee_salary": 162700,
-                "employee_age": 33,
-                "profile_image": ""
-                },
-]
+            searchText: '',
+            searchResults: [],
+          
         }
     },
     methods:{
-
-        async fetch(error) {
-            this.loading = false
-        this.posts = await this.$axios.$get('https://dummy.restapiexample.com/api/v1/employees')
-        console.log(this.posts)
-        this.loading = true
-    },
-    async liKeyDown({ params}){
-        this.loading = false
-        this.posts = await this.$axios.$get(`https://dummy.restapiexample.com/api/v1/employees/${this.myInput}`)
-        console.log(this.posts)
+    async liKeyDown(){
+        console.log(this.searchResults)
+        this.loading = false    
+        if (this.searchText.length > 0) {
+          axios
+            .get('https://dummy.restapiexample.com/api/v1/employees')
+            .then(response => {
+              const filteredData = response.data.filter(data => {
+                return data.employee_name.toLowerCase().includes(this.searchText.toLowerCase());
+              });
+              this.searchResults = filteredData;
+            })
+            .catch(error => {
+              console.error('Error fetching data:', error);
+            });
+        } else {
+          this.searchResults = [];
+        }
         this.loading = true
     },
     }
